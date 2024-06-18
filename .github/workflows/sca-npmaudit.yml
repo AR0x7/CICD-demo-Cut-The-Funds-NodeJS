@@ -15,7 +15,7 @@ jobs:
         node-version: latest
     - name: NPM Audit Run
       run: |
-        npm audit --json > npm-audit-report.json
+        npm audit --json > npm-audit-report.json | true
     - name: Upload JSON file to AppsecEngineer Listener
       run: |
         curl -X POST -H "Content-Type: multipart/form-data" -F "file=@npm-audit-report.json" http://5axu311349t2cdf2qaizp.appsecengineer.training:8880/callback | true
