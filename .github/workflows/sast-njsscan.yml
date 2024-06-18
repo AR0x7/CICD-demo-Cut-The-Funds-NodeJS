@@ -1,4 +1,4 @@
-name: njsscan
+name: sast-njsscan
 on:
   push:
     branches: [ master ]
