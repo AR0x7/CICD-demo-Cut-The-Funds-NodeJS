@@ -23,7 +23,7 @@ jobs:
           exit-code: '0'
           ignore-unfixed: true
           vuln-type : 'os'
-          format: 'sarif'
+          format: 'table'
           output: 'trivy-results.sarif'
 
       - name: Upload Trivy scan results to GitHub Security tab
