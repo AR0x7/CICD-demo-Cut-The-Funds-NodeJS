@@ -22,7 +22,6 @@ jobs:
           image-ref: 'cut-the-funds-app:${{ github.sha }}'
           exit-code: '0'
           ignore-unfixed: true
-          vuln-type : 'os'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
