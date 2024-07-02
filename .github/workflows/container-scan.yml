@@ -22,7 +22,7 @@ jobs:
           image-ref: 'cut-the-funds-app:${{ github.sha }}'
           exit-code: '0'
           ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
+          severity: 'CRITICAL,HIGH,MEDIUM'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
