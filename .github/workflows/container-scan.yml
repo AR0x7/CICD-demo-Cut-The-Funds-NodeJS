@@ -20,7 +20,13 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'cut-the-funds-app:${{ github.sha }}'
-          format: 'table'
           exit-code: '0'
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
