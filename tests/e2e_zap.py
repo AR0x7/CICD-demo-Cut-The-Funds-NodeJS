@@ -79,6 +79,8 @@ while int(zap.ascan.status(active_scan_id)) < 100:
 
 path = getcwd()
 r = requests.get('http://localhost:8090/JSON/reports/action/generate/', params={'title': 'DAST-Report',  'template': 'sarif-json', 'reportDir':path, 'reportFileName': 'dast_report_sarif'}, headers = {'Accept': 'application/json'})
+print(r.json())
 r = requests.get('http://localhost:8090/JSON/reports/action/generate/', params={'title': 'DAST-Report',  'template': 'traditional-html-plus', 'reportDir':path, 'reportFileName': 'dast_report_html'}, headers = {'Accept': 'application/json'})
+print(r.json())
 
 zap.core.shutdown()
