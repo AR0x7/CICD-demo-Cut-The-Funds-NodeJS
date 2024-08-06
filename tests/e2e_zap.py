@@ -76,10 +76,9 @@ while int(zap.ascan.status(active_scan_id)) < 100:
 #source_info = 'Vulnerability Report for Flask_API;Abhay Bhargav;API Team;{};{};v1;v1;API Scan Report'.format(now, now)
 #path = getcwd() + "/zap-report.json"
 #zap.exportreport.generate(path, "json", sourcedetails=source_info,alertseverity=alert_severity, alertdetails=alert_details, scanid=active_scan_id)
+
 path = getcwd()
-
-r = requests.get('http://localhost:8090/JSON/reports/action/generate/', params={'title': 'DAST-Report',  'template': 'sarif-json', 'reportDir':path, 'reportFileName': 'dast_report'}, headers = {'Accept': 'application/json'})
-
-print(r.json())
+r = requests.get('http://localhost:8090/JSON/reports/action/generate/', params={'title': 'DAST-Report',  'template': 'sarif-json', 'reportDir':path, 'reportFileName': 'dast_report_sarif'}, headers = {'Accept': 'application/json'})
+r = requests.get('http://localhost:8090/JSON/reports/action/generate/', params={'title': 'DAST-Report',  'template': 'traditional-html-plus', 'reportDir':path, 'reportFileName': 'dast_report_html'}, headers = {'Accept': 'application/json'})
 
 zap.core.shutdown()
