@@ -6,7 +6,7 @@ from os import getcwd
 
 # Test Automation Part of the Script
 
-target_url = 'http://localhost:5050'
+target_url = 'http://localhost:3000'
 proxies = {
     'http': 'http://127.0.0.1:8090',
     'https': 'http://127.0.0.1:8090',
@@ -57,7 +57,7 @@ zap = ZAP(proxies={'http': 'http://localhost:8090',
 if 'Light' not in zap.ascan.scan_policy_names:
     print("Adding scan policies")
     zap.ascan.add_scan_policy(
-        "Light", alertthreshold="Medium", attackstrength="Low")
+        "Light", alertthreshold="Low", attackstrength="Low")
 
 active_scan_id = zap.ascan.scan(target_url, scanpolicyname='Light')
 
@@ -69,14 +69,16 @@ while int(zap.ascan.status(active_scan_id)) < 100:
         zap.ascan.status(active_scan_id)))
     time.sleep(10)
 
-now = datetime.datetime.now().strftime("%m/%d/%Y")
-alert_severity = 't;t;t;t'  # High;Medium;Low;Info
+#now = datetime.datetime.now().strftime("%m/%d/%Y")
+#alert_severity = 't;t;t;t'  # High;Medium;Low;Info
 # CWEID;#WASCID;Description;Other Info;Solution;Reference;Request Header;Response Header;Request Body;Response Body
-alert_details = 't;t;t;t;t;t;f;f;f;f'
-source_info = 'Vulnerability Report for Flask_API;Abhay Bhargav;API Team;{};{};v1;v1;API Scan Report'.format(
-    now, now)
-path = getcwd() + "/zap-report.json"
-zap.exportreport.generate(path, "json", sourcedetails=source_info,
-                          alertseverity=alert_severity, alertdetails=alert_details, scanid=active_scan_id)
+#alert_details = 't;t;t;t;t;t;f;f;f;f'
+#source_info = 'Vulnerability Report for Flask_API;Abhay Bhargav;API Team;{};{};v1;v1;API Scan Report'.format(now, now)
+#path = getcwd() + "/zap-report.json"
+#zap.exportreport.generate(path, "json", sourcedetails=source_info,alertseverity=alert_severity, alertdetails=alert_details, scanid=active_scan_id)
+
+r = requests.get('http://localhost:8090/JSON/reports/action/generate/', params={'title': 'DAST-Report',  'template': 'sarif-json', 'reportDir': getcwd(), 'reportFileName': 'dast_report.sarif'}, headers = {'Accept': 'application/json'})
+
+print(r.json())
 
 zap.core.shutdown()
