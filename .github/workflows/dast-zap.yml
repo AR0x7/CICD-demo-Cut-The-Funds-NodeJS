@@ -21,7 +21,7 @@ jobs:
         run: echo $(PWD)
       - name: Build Image
         run: docker build -t vulnerable-app .
-      - name: Install OWASP ZAP
+      - name: Setup OWASP ZAP
         run: |
           mkdir -p ./zap
           cd ./zap
@@ -53,7 +53,11 @@ jobs:
         run: |
           cd ./tests/
           python e2e_zap.py
-      - name: "Upload Report"
+      - name: Upload SARIF file to Github
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ./tests/dast_report.json
+      - name: "Upload Artifact"
         uses: actions/upload-artifact@v4
         with:
           name: zap-scan-report
